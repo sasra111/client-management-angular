@@ -1,0 +1,88 @@
+<div class="p-4 surface-card border-round shadow-2">
+  <h2 class="p-text-center p-mb-3">Client Form</h2>
+  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="p-fluid">
+    <div class="formgrid grid">
+      <!-- Name -->
+      <div class="field col-12 md:col-6">
+        <label for="name" class="mb-2">Name</label>
+        <input id="name" type="text" pInputText formControlName="name" />
+      </div>
+
+      <!-- Email -->
+      <div class="field col-12 md:col-6">
+        <label for="email" class="mb-2">Email</label>
+        <input id="email" type="email" pInputText formControlName="email" />
+      </div>
+
+      <!-- Phone -->
+      <div class="field col-12 md:col-6">
+        <label for="phone" class="mb-2">Phone</label>
+        <input id="phone" type="text" pInputText formControlName="phone" />
+      </div>
+
+      <!-- Client Type -->
+      <div class="field col-12 md:col-6">
+        <label for="clientType" class="mb-2">Client Type</label>
+        <p-dropdown
+          [options]="clientTypes"
+          formControlName="clientType"
+          placeholder="Select a Client Type"
+        ></p-dropdown>
+      </div>
+
+      <!-- Bank Balance -->
+      <div class="field col-12 md:col-6">
+        <label for="bankBalance" class="mb-2">Bank Balance</label>
+        <p-inputNumber
+          inputId="bankBalance"
+          formControlName="bankBalance"
+          mode="currency"
+          currency="LKR"
+          locale="en-US"
+        ></p-inputNumber>
+      </div>
+
+      <!-- Outstanding Loan -->
+      <div class="field col-12 md:col-6">
+        <label for="outstandingLoan" class="mb-2">Outstanding Loan</label>
+        <p-inputNumber
+          inputId="outstandingLoan"
+          formControlName="outstandingLoan"
+          mode="currency"
+          currency="LKR"
+          locale="en-US"
+        ></p-inputNumber>
+      </div>
+
+      <!-- Registration Date -->
+      <div class="field col-12 md:col-6">
+        <label for="registrationDate" class="mb-2">Registration Date</label>
+        <p-calendar
+          id="registrationDate"
+          formControlName="registrationDate"
+          dateFormat="dd-mm-yy"
+        ></p-calendar>
+      </div>
+
+      <!-- Is Active -->
+      <div class="field-checkbox col-12 md:col-6">
+        <p-checkbox
+          inputId="isActive"
+          formControlName="isActive"
+          binary="true"
+        ></p-checkbox>
+        <label for="isActive" class="ml-2">Is Active</label>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="field col-12">
+        <button
+          pButton
+          type="submit"
+          label="Add Client"
+          class="p-button-success"
+        ></button>
+      </div>
+    </div>
+  </form>
+</div>
