@@ -1,88 +1,185 @@
-<div class="p-4 surface-card border-round shadow-2">
-  <h2 class="p-text-center p-mb-3">Client Form</h2>
-  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="p-fluid">
-    <div class="formgrid grid">
-      <!-- Name -->
-      <div class="field col-12 md:col-6">
-        <label for="name" class="mb-2">Name</label>
-        <input id="name" type="text" pInputText formControlName="name" />
-      </div>
+<div class="card">
+  <div class="p-5 surface-card border-round-xl shadow-4">
+    <h2 class="text-3xl font-bold text-center mb-5 text-primary">
+      Client Registration
+    </h2>
 
-      <!-- Email -->
-      <div class="field col-12 md:col-6">
-        <label for="email" class="mb-2">Email</label>
-        <input id="email" type="email" pInputText formControlName="email" />
-      </div>
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="p-fluid">
+      <div class="formgrid grid p-2">
+        <!-- Name -->
+        <div class="field col-12 md:col-6">
+          <label for="name" class="block text-900 font-medium mb-2">Name</label>
 
-      <!-- Phone -->
-      <div class="field col-12 md:col-6">
-        <label for="phone" class="mb-2">Phone</label>
-        <input id="phone" type="text" pInputText formControlName="phone" />
-      </div>
+          <input
+            id="name"
+            type="text"
+            pInputText
+            formControlName="name"
+            class="p-inputtext-lg"
+          />
 
-      <!-- Client Type -->
-      <div class="field col-12 md:col-6">
-        <label for="clientType" class="mb-2">Client Type</label>
-        <p-dropdown
-          [options]="clientTypes"
-          formControlName="clientType"
-          placeholder="Select a Client Type"
-        ></p-dropdown>
-      </div>
+          <small
+            *ngIf="f['name'].touched && f['name'].invalid"
+            class="p-error block mt-1"
+            >Name is required</small
+          >
+        </div>
 
-      <!-- Bank Balance -->
-      <div class="field col-12 md:col-6">
-        <label for="bankBalance" class="mb-2">Bank Balance</label>
-        <p-inputNumber
-          inputId="bankBalance"
-          formControlName="bankBalance"
-          mode="currency"
-          currency="LKR"
-          locale="en-US"
-        ></p-inputNumber>
-      </div>
+        <!-- Email -->
+        <div class="field col-12 md:col-6">
+          <label for="email" class="block text-900 font-medium mb-2"
+            >Email</label
+          >
 
-      <!-- Outstanding Loan -->
-      <div class="field col-12 md:col-6">
-        <label for="outstandingLoan" class="mb-2">Outstanding Loan</label>
-        <p-inputNumber
-          inputId="outstandingLoan"
-          formControlName="outstandingLoan"
-          mode="currency"
-          currency="LKR"
-          locale="en-US"
-        ></p-inputNumber>
-      </div>
+          <input
+            id="email"
+            type="email"
+            pInputText
+            formControlName="email"
+            class="p-inputtext-lg"
+          />
 
-      <!-- Registration Date -->
-      <div class="field col-12 md:col-6">
-        <label for="registrationDate" class="mb-2">Registration Date</label>
-        <p-calendar
-          id="registrationDate"
-          formControlName="registrationDate"
-          dateFormat="dd-mm-yy"
-        ></p-calendar>
-      </div>
+          <small
+            *ngIf="f['email'].touched && f['email'].errors?.['required']"
+            class="p-error block mt-1"
+            >Email is required</small
+          >
+          <small
+            *ngIf="f['email'].touched && f['email'].errors?.['email']"
+            class="p-error block mt-1"
+            >Invalid email format</small
+          >
+        </div>
 
-      <!-- Is Active -->
-      <div class="field-checkbox col-12 md:col-6">
-        <p-checkbox
-          inputId="isActive"
-          formControlName="isActive"
-          binary="true"
-        ></p-checkbox>
-        <label for="isActive" class="ml-2">Is Active</label>
-      </div>
+        <!-- Phone -->
+        <div class="field col-12 md:col-6">
+          <label for="phone" class="block text-900 font-medium mb-2"
+            >Phone</label
+          >
 
-      <!-- Submit Button -->
-      <div class="field col-12">
-        <button
-          pButton
-          type="submit"
-          label="Add Client"
-          class="p-button-success"
-        ></button>
+          <input
+            id="phone"
+            type="text"
+            pInputText
+            formControlName="phone"
+            class="p-inputtext-lg"
+          />
+
+          <small
+            *ngIf="f['phone'].touched && f['phone'].errors?.['required']"
+            class="p-error block mt-1"
+            >Phone is required</small
+          >
+          <small
+            *ngIf="f['phone'].touched && f['phone'].errors?.['pattern']"
+            class="p-error block mt-1"
+            >Enter a 10-digit number</small
+          >
+        </div>
+
+        <!-- Client Type -->
+        <div class="field col-12 md:col-6">
+          <label for="clientType" class="block text-900 font-medium mb-2"
+            >Client Type</label
+          >
+          <p-select
+            [options]="clientTypes"
+            formControlName="clientType"
+            class="w-full md:w-56"
+          />
+          <small
+            *ngIf="f['clientType'].touched && f['clientType'].invalid"
+            class="p-error block mt-1"
+            >Client type is required</small
+          >
+        </div>
+
+        <!-- Bank Balance -->
+        <div class="field col-12 md:col-6">
+          <label for="bankBalance" class="block text-900 font-medium mb-2"
+            >Bank Balance</label
+          >
+          <p-inputNumber
+            inputId="bankBalance"
+            formControlName="bankBalance"
+            mode="currency"
+            currency="LKR"
+            locale="en-US"
+            styleClass="p-inputtext-lg"
+            [style]="{ width: '50%' }"
+          ></p-inputNumber>
+          <small
+            *ngIf="f['bankBalance'].touched && f['bankBalance'].errors?.['required']"
+            class="p-error block mt-1"
+            >Bank balance is required</small
+          >
+          <small
+            *ngIf="f['bankBalance'].touched && f['bankBalance'].errors?.['min']"
+            class="p-error block mt-1"
+            >Bank balance must be positive</small
+          >
+        </div>
+
+        <!-- Outstanding Loan -->
+        <div class="field col-12 md:col-6">
+          <label for="outstandingLoan" class="block text-900 font-medium mb-2"
+            >Outstanding Loan</label
+          >
+          <p-inputNumber
+            inputId="outstandingLoan"
+            formControlName="outstandingLoan"
+            mode="currency"
+            currency="LKR"
+            locale="en-US"
+            styleClass="p-inputtext-lg"
+            [style]="{ width: '50%' }"
+          ></p-inputNumber>
+          <small
+            *ngIf="f['outstandingLoan'].touched && f['outstandingLoan'].errors?.['min']"
+            class="p-error block mt-1"
+            >Outstanding loan must be positive</small
+          >
+        </div>
+
+        <!-- Registration Date -->
+        <div class="field col-12 md:col-6">
+          <label for="registrationDate" class="block text-900 font-medium mb-2"
+            >Registration Date</label
+          >
+          <p-calendar
+            id="registrationDate"
+            formControlName="registrationDate"
+            dateFormat="dd-mm-yy"
+            styleClass="p-inputtext-lg"
+            [style]="{ width: '50%' }"
+            [showIcon]="true"
+          ></p-calendar>
+          <small
+            *ngIf="
+              f['registrationDate'].touched && f['registrationDate'].invalid
+            "
+            class="p-error block mt-1"
+            >Registration date is required</small
+          >
+        </div>
+
+        <!-- Is Active -->
+        <div class="field col-12 md:col-6">
+          <div class="flex items-center gap-2">
+            <p-checkbox
+              inputId="isActive"
+              formControlName="isActive"
+              [binary]="true"
+            ></p-checkbox>
+            <label for="isActive" class="text-900 font-medium">Is Active</label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="p-field p-col-12">
+          <button pButton type="submit" label="Add Client"></button>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
