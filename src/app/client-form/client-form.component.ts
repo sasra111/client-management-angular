@@ -1,4 +1,10 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from '../models/client.model';
 import { CommonModule } from '@angular/common';
@@ -35,7 +41,13 @@ import { SelectModule } from 'primeng/select';
   styleUrls: ['./client-form.component.css'],
 })
 export class ClientFormComponent {
+  @Input() selectedClient: Client | null = null;
+  @Input() selectedIndex: number | null = null;
+  @Output() formSubmitted = new EventEmitter<void>();
+  @Output() editCancelled = new EventEmitter<void>();
   @Output() clientAdded = new EventEmitter<Client>();
+  isEditMode = false;
+
   clientForm: FormGroup;
   clientTypes = ['Individual', 'Business'];
 
@@ -56,6 +68,13 @@ export class ClientFormComponent {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedClient'] && this.selectedClient) {
+      this.isEditMode = true;
+      this.clientForm.patchValue(this.selectedClient);
+    }
+  }
+
   onSubmit(): void {
     if (this.clientForm.invalid) {
       this.clientForm.markAllAsTouched();
@@ -67,13 +86,30 @@ export class ClientFormComponent {
       return;
     }
     const client: Client = this.clientForm.value;
-    this.clientService.addClient(client);
+    if (this.isEditMode && this.selectedIndex !== null) {
+      this.clientService.updateClient(this.selectedIndex, client);
+    } else {
+      this.clientService.addClient(client);
+    }
+    this.resetForm();
+    this.formSubmitted.emit();
     this.messageService.add({
       severity: 'success',
       summary: 'Client Added',
       detail: 'Client saved successfully!',
     });
+  }
+
+  onCancel(): void {
+    this.resetForm();
+    this.editCancelled.emit();
+  }
+
+  private resetForm(): void {
     this.clientForm.reset();
+    this.isEditMode = false;
+    this.selectedClient = null;
+    this.selectedIndex = null;
   }
 
   get f() {

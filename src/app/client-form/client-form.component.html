@@ -177,7 +177,8 @@
 
         <!-- Submit Button -->
         <div class="p-field p-col-12">
-          <button pButton type="submit" label="Add Client"></button>
+          <button pButton type="submit" label="{{ isEditMode ? 'Update Client' : 'Add Client' }}" ></button>
+          <button *ngIf="isEditMode" pButton type="button" label="Cancel" class="p-button-secondary" (click)="onCancel()"></button>
         </div>
       </div>
     </form>

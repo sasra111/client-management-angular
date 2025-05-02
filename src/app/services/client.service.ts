@@ -22,6 +22,10 @@ export class ClientService {
     this.saveToStorage();
   }
 
+  updateClient(index: number, updatedClient: Client): void {
+    this.clients[index] = updatedClient;
+  }
+
   deleteClient(index: number): void {
     this.clients.splice(index, 1);
     this.saveToStorage();
